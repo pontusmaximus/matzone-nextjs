@@ -2,6 +2,7 @@
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { useEffect, useState } from 'react';
 import type { WCProduct, WCCartItem } from '@/types/woocommerce';
 
 interface CartStore {
@@ -21,7 +22,7 @@ function cartItemKey(item: WCCartItem): string {
   return `${item.product.id}-${item.variationId ?? 0}`;
 }
 
-export const useCart = create<CartStore>()(
+const useCartStore = create<CartStore>()(
   persist(
     (set, get) => ({
       items: [],
@@ -82,3 +83,20 @@ export const useCart = create<CartStore>()(
     { name: 'matzone-cart' }
   )
 );
+
+/** Hydration-safe hook — returns empty cart on server, real cart after mount */
+export function useCart() {
+  const store = useCartStore();
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
+  return {
+    ...store,
+    items: hydrated ? store.items : [],
+    totalItems: () => hydrated ? store.totalItems() : 0,
+    totalPrice: () => hydrated ? store.totalPrice() : 0,
+  };
+}
