@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import type { Metadata } from 'next';
 import { getProducts, getCategories } from '@/lib/woocommerce';
 import ProductCard from '@/components/ProductCard';
@@ -16,6 +16,7 @@ interface ShopPageProps {
 }
 
 export default async function ShopPage({ params: { locale }, searchParams }: ShopPageProps) {
+  setRequestLocale(locale);
   const t   = await getTranslations('products');
   const currentPage = parseInt(searchParams.page ?? '1', 10);
   const perPage = 12;

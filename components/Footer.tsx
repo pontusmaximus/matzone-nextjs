@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import type { Locale } from '@/i18n';
 
 interface FooterProps {
@@ -7,6 +7,7 @@ interface FooterProps {
 }
 
 export default async function Footer({ locale }: FooterProps) {
+  setRequestLocale(locale);
   const t = await getTranslations('footer');
 
   return (

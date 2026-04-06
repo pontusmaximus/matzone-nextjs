@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import type { Metadata } from 'next';
 import { getProducts, getCategories } from '@/lib/woocommerce';
 import ProductCard from '@/components/ProductCard';
@@ -23,6 +23,7 @@ export default async function HomePage({
 }: {
   params: { locale: Locale };
 }) {
+  setRequestLocale(locale);
   const t     = await getTranslations('hero');
   const tp    = await getTranslations('products');
   const tc    = await getTranslations('categories');

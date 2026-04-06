@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import type { Metadata } from 'next';
 import type { Locale } from '@/i18n';
 
@@ -67,6 +67,7 @@ const demoPostsDe = [
 ];
 
 export default async function BlogPage({ params: { locale } }: { params: { locale: Locale } }) {
+  setRequestLocale(locale);
   const t = await getTranslations('blog');
 
   return (

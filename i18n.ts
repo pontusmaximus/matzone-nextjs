@@ -57,14 +57,15 @@ export const localeNames: Record<Locale, string> = {
   ro: '🇷🇴 Română',
 };
 
-export default getRequestConfig(async ({ locale }) => {
-  if (!locales.includes(locale as Locale)) notFound();
+export default getRequestConfig(async ({ requestLocale }) => {
+  const locale = (await requestLocale) as Locale;
+  if (!locale || !locales.includes(locale)) notFound();
 
   // Load base language file (de covers at/ch, en covers all English, etc.)
-  const baseLocale = getBaseLocale(locale as Locale);
+  const baseLocale = getBaseLocale(locale);
 
   const messages = (await import(`./messages/${baseLocale}.json`)).default;
-  return { messages };
+  return { locale, messages };
 });
 
 function getBaseLocale(locale: Locale): string {

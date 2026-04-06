@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import type { Metadata } from 'next';
 import { getProductBySlug, getProducts, formatPrice } from '@/lib/woocommerce';
 import ProductCard from '@/components/ProductCard';
@@ -34,6 +34,7 @@ export async function generateMetadata({ params: { locale, slug } }: ProductPage
 }
 
 export default async function ProductPage({ params: { locale, slug } }: ProductPageProps) {
+  setRequestLocale(locale);
   const t = await getTranslations('product');
 
   const product = await getProductBySlug(slug).catch(() => null);
