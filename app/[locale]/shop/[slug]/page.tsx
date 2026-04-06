@@ -1,12 +1,10 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import type { Metadata } from 'next';
 import { getProductBySlug, getProducts, getProductVariations } from '@/lib/woocommerce';
 import ProductCard from '@/components/ProductCard';
-import VariationSelector from '@/components/VariationSelector';
-import ProductGallery from '@/components/ProductGallery';
+import ProductDetail from '@/components/ProductDetail';
 import type { Locale } from '@/i18n';
 
 interface ProductPageProps {
@@ -40,7 +38,6 @@ export default async function ProductPage({ params: { locale, slug } }: ProductP
   const product = await getProductBySlug(slug).catch(() => null);
   if (!product) notFound();
 
-  // Fetch variations for variable products
   const variations = product.type === 'variable'
     ? await getProductVariations(product.id).catch(() => [])
     : [];
@@ -50,7 +47,6 @@ export default async function ProductPage({ params: { locale, slug } }: ProductP
 
   const cleanDesc = product.description.replace(/<[^>]+>/g, '');
 
-  // JSON-LD structured data
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -87,49 +83,8 @@ export default async function ProductPage({ params: { locale, slug } }: ProductP
           <span className="text-black truncate">{product.name}</span>
         </nav>
 
-        {/* Product Detail */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
-          {/* Image Gallery */}
-          <ProductGallery images={product.images} productName={product.name} />
-
-          {/* Info */}
-          <div>
-            <p className="text-[11px] tracking-[0.1em] uppercase text-gray-400 mb-3">
-              {product.categories?.[0]?.name}
-            </p>
-            <h1 className="font-serif text-[28px] md:text-[36px] font-normal tracking-[-0.02em] mb-6">{product.name}</h1>
-
-            {/* Variation selector (handles price, attributes, add-to-cart) */}
-            <VariationSelector
-              product={product}
-              variations={variations}
-              locale={locale}
-            />
-
-            {/* Short Description */}
-            {product.short_description && (
-              <div
-                className="mt-6 text-sm text-gray-600 leading-relaxed prose prose-sm"
-                dangerouslySetInnerHTML={{ __html: product.short_description }}
-              />
-            )}
-
-            {/* Trust badges */}
-            <div className="mt-8 pt-6 border-t border-gray-100 grid grid-cols-3 gap-4 text-center">
-              {[
-                { icon: '🚚', label: 'DPD Versand', sub: 'EU-weit' },
-                { icon: '↩️', label: '30 Tage Rückgabe', sub: 'Kostenlos' },
-                { icon: '🇦🇹', label: 'Made in Austria', sub: 'Handgefertigt' },
-              ].map(b => (
-                <div key={b.label} className="text-center">
-                  <div className="text-2xl mb-1">{b.icon}</div>
-                  <div className="text-[11px] font-medium text-gray-700">{b.label}</div>
-                  <div className="text-[10px] text-gray-400">{b.sub}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+        {/* Product Detail — client component for gallery + variation sync */}
+        <ProductDetail product={product} variations={variations} locale={locale} />
 
         {/* Full Description */}
         {product.description && (

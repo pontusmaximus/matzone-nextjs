@@ -1,7 +1,7 @@
+import Link from 'next/link';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import type { Metadata } from 'next';
 import type { Locale } from '@/i18n';
-import CustomOrderForm from '@/components/CustomOrderForm';
 
 export async function generateMetadata({ params: { locale } }: { params: { locale: Locale } }): Promise<Metadata> {
   const t = await getTranslations({ locale, namespace: 'custom' });
@@ -21,38 +21,42 @@ export default async function CustomPage({ params: { locale } }: { params: { loc
         <p className="text-[14px] text-gray-500 max-w-xl">{t('subtitle')}</p>
       </div>
 
-      <div className="px-6 md:px-20 py-12 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_1.2fr] gap-16">
-          {/* Info */}
-          <div>
-            <h2 className="font-serif text-[24px] font-normal tracking-[-0.02em] mb-6">{t('howTitle')}</h2>
-            <div className="space-y-8">
-              {[
-                { step: '01', title: t('step1Title'), desc: t('step1Desc') },
-                { step: '02', title: t('step2Title'), desc: t('step2Desc') },
-                { step: '03', title: t('step3Title'), desc: t('step3Desc') },
-                { step: '04', title: t('step4Title'), desc: t('step4Desc') },
-              ].map(s => (
-                <div key={s.step} className="flex gap-4">
-                  <span className="text-[28px] font-serif text-gray-200 leading-none">{s.step}</span>
-                  <div>
-                    <h3 className="text-[14px] font-medium mb-1">{s.title}</h3>
-                    <p className="text-[13px] text-gray-500 leading-relaxed">{s.desc}</p>
-                  </div>
-                </div>
-              ))}
+      <div className="px-6 md:px-20 py-12 md:py-16 max-w-3xl">
+        {/* Steps */}
+        <h2 className="font-serif text-[24px] font-normal tracking-[-0.02em] mb-8">{t('howTitle')}</h2>
+        <div className="space-y-8 mb-12">
+          {[
+            { step: '01', title: t('step1Title'), desc: t('step1Desc') },
+            { step: '02', title: t('step2Title'), desc: t('step2Desc') },
+            { step: '03', title: t('step3Title'), desc: t('step3Desc') },
+            { step: '04', title: t('step4Title'), desc: t('step4Desc') },
+          ].map(s => (
+            <div key={s.step} className="flex gap-5">
+              <span className="text-[32px] font-serif text-gray-200 leading-none flex-shrink-0">{s.step}</span>
+              <div>
+                <h3 className="text-[15px] font-medium mb-1">{s.title}</h3>
+                <p className="text-[13px] text-gray-500 leading-relaxed">{s.desc}</p>
+              </div>
             </div>
+          ))}
+        </div>
 
-            {/* Trust info */}
-            <div className="mt-10 pt-8 border-t border-gray-100 space-y-3 text-[13px] text-gray-500">
-              <p>📞 {t('phoneNote')}: +43 699 100 88 504</p>
-              <p>📧 office@fussmatte.at</p>
-              <p>⏱ {t('deliveryNote')}</p>
-            </div>
-          </div>
+        {/* CTA to shop */}
+        <div className="bg-gray-50 p-8 border border-gray-100">
+          <p className="text-[14px] text-gray-600 mb-4">{t('shopNote')}</p>
+          <Link
+            href={`/${locale}/shop`}
+            className="inline-block bg-black text-white px-8 py-3.5 text-[12px] font-medium tracking-[0.06em] uppercase hover:bg-[#1a1a1a] transition-colors"
+          >
+            {t('shopCta')}
+          </Link>
+        </div>
 
-          {/* Form */}
-          <CustomOrderForm />
+        {/* Contact info */}
+        <div className="mt-10 pt-8 border-t border-gray-100 space-y-3 text-[13px] text-gray-500">
+          <p>📞 {t('phoneNote')}: +43 699 100 88 504</p>
+          <p>📧 office@fussmatte.at</p>
+          <p>⏱ {t('deliveryNote')}</p>
         </div>
       </div>
     </div>

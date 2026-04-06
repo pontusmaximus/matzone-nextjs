@@ -87,7 +87,7 @@ export default async function HomePage({
         {/* Hero Image */}
         <div className="bg-gray-100 relative overflow-hidden min-h-[400px] flex items-center justify-center">
           <Image
-            src="https://fussmatte.at/wp-content/uploads/2024/07/fussmatte_Taktil-04.jpg"
+            src="https://fussmatte.at/wp-content/uploads/2023/04/Rips-fussmatte.jpg"
             alt="Fussmatte Taktil"
             fill
             className="object-cover"

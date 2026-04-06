@@ -5,34 +5,33 @@ import { useTranslations } from 'next-intl';
 import { useCart } from '@/lib/cart';
 import { useShopCountry } from '@/lib/shop-country';
 import { formatLocalPrice } from '@/lib/shipping';
-import type { WCProduct, WCVariation, WCAttribute } from '@/types/woocommerce';
+import type { WCProduct, WCVariation } from '@/types/woocommerce';
 import type { Locale } from '@/i18n';
 
 interface VariationSelectorProps {
   product: WCProduct;
   variations: WCVariation[];
   locale: Locale;
+  onVariationChange?: (variation: WCVariation | null) => void;
 }
 
-export default function VariationSelector({ product, variations, locale }: VariationSelectorProps) {
+export default function VariationSelector({ product, variations, locale, onVariationChange }: VariationSelectorProps) {
   const t = useTranslations('product');
   const { addItem } = useCart();
   const { country } = useShopCountry();
   const shopCountry = country ?? locale;
 
-  // Only show variation-attributes (the ones that change between variations)
   const variationAttributes = product.attributes.filter(a => a.variation);
 
-  // State: selected option per attribute
-  const [selected, setSelected] = useState<Record<string, string>>(() => {
-    const initial: Record<string, string> = {};
-    variationAttributes.forEach(attr => {
-      initial[attr.name] = '';
-    });
-    return initial;
-  });
+  // Selected variation options
+  const [selected, setSelected] = useState<Record<string, string>>({});
 
-  // Auto-select first option for each attribute
+  // Custom dimensions
+  const [width, setWidth] = useState('');
+  const [length, setLength] = useState('');
+  const isCustomSize = width !== '' || length !== '';
+
+  // Auto-select first option
   useEffect(() => {
     const initial: Record<string, string> = {};
     variationAttributes.forEach(attr => {
@@ -50,12 +49,16 @@ export default function VariationSelector({ product, variations, locale }: Varia
     return variations.find(v =>
       variationAttributes.every(attr => {
         const vAttr = v.attributes.find(a => a.name === attr.name);
-        // Empty option in variation = "any" (matches all)
         if (!vAttr || vAttr.option === '') return true;
         return vAttr.option === selected[attr.name];
       })
     ) ?? null;
   }, [selected, variations, variationAttributes]);
+
+  // Notify parent about variation change (for image swap)
+  useEffect(() => {
+    onVariationChange?.(matchedVariation);
+  }, [matchedVariation]);
 
   const isVariable = product.type === 'variable';
   const currentPrice = matchedVariation?.price ?? product.price;
@@ -73,11 +76,15 @@ export default function VariationSelector({ product, variations, locale }: Varia
 
   const handleAddToCart = () => {
     if (!canAddToCart) return;
+    const options = { ...selected };
+    if (width) options['Breite (mm)'] = width;
+    if (length) options['Länge (mm)'] = length;
+
     addItem(
       { ...product, price: currentPrice },
       1,
       matchedVariation?.id,
-      isVariable ? selected : undefined
+      options
     );
   };
 
@@ -93,6 +100,7 @@ export default function VariationSelector({ product, variations, locale }: Varia
         ) : (
           <span className="text-[28px] font-medium">{formatLocalPrice(parseFloat(currentPrice), shopCountry)}</span>
         )}
+        <p className="text-[11px] text-gray-400 mt-1">{t('priceNote')}</p>
       </div>
 
       {/* Variation selectors */}
@@ -126,6 +134,46 @@ export default function VariationSelector({ product, variations, locale }: Varia
           </div>
         </div>
       ))}
+
+      {/* Custom dimensions */}
+      <div className="mb-5">
+        <label className="block text-[12px] font-medium tracking-[0.06em] uppercase text-gray-500 mb-2">
+          {t('customSize')}
+        </label>
+        <div className="grid grid-cols-2 gap-3">
+          <div>
+            <label className="block text-[11px] text-gray-400 mb-1">{t('widthMm')}</label>
+            <input
+              type="number"
+              min="100"
+              max="5000"
+              step="1"
+              value={width}
+              onChange={e => setWidth(e.target.value)}
+              placeholder="z.B. 800"
+              className="w-full border border-gray-200 px-3 py-2.5 text-[13px] outline-none focus:border-black transition-colors"
+            />
+          </div>
+          <div>
+            <label className="block text-[11px] text-gray-400 mb-1">{t('lengthMm')}</label>
+            <input
+              type="number"
+              min="100"
+              max="5000"
+              step="1"
+              value={length}
+              onChange={e => setLength(e.target.value)}
+              placeholder="z.B. 500"
+              className="w-full border border-gray-200 px-3 py-2.5 text-[13px] outline-none focus:border-black transition-colors"
+            />
+          </div>
+        </div>
+        {isCustomSize && (
+          <p className="text-[11px] text-amber-600 mt-2 flex items-center gap-1">
+            <span>⚠</span> {t('customSizeNote')}
+          </p>
+        )}
+      </div>
 
       {/* Non-variation attributes (display only) */}
       {product.attributes.filter(a => !a.variation && a.visible).map(attr => (

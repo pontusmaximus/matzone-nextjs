@@ -108,7 +108,12 @@
     "relatedTitle": "Das könnte dir auch gefallen",
     "backToShop": "← Zurück zum Shop",
     "inStock": "Auf Lager",
-    "outOfStock": "Nicht verfügbar"
+    "outOfStock": "Nicht verfügbar",
+    "priceNote": "Preis pro Stück, inkl. MwSt.",
+    "customSize": "Ihre Maße (Maßanfertigung)",
+    "widthMm": "Breite (mm)",
+    "lengthMm": "Länge (mm)",
+    "customSizeNote": "Bei Maßanfertigung entfällt das Rückgaberecht."
   },
   "blog": {
     "title": "Blog",
@@ -156,6 +161,8 @@
     "step4Desc": "Ihre maßgefertigte Fussmatte wird in ca. 10 Werktagen geliefert.",
     "phoneNote": "Telefonische Beratung",
     "deliveryNote": "Lieferzeit Maßanfertigung: ca. 10 Werktage",
+    "shopNote": "Wählen Sie einfach ein Produkt im Shop und geben Sie Ihre Wunschmaße direkt bei der Bestellung an.",
+    "shopCta": "Zum Shop",
     "dimensions": "Maße",
     "width": "Breite",
     "length": "Länge",
