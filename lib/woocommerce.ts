@@ -1,4 +1,4 @@
-import type { WCProduct, WCProductCategory } from '@/types/woocommerce';
+import type { WCProduct, WCProductCategory, WCVariation } from '@/types/woocommerce';
 
 const BASE_URL  = process.env.WOOCOMMERCE_URL!;
 const CK        = process.env.WOOCOMMERCE_CONSUMER_KEY!;
@@ -58,6 +58,14 @@ export async function getProductsByCategory(categoryId: number, limit = 12): Pro
     status:   'publish',
     category: categoryId,
     orderby:  'popularity',
+  });
+}
+
+/* ── Variations ── */
+export async function getProductVariations(productId: number): Promise<WCVariation[]> {
+  return wcFetch<WCVariation[]>(`/products/${productId}/variations`, {
+    per_page: 100,
+    status: 'publish',
   });
 }
 

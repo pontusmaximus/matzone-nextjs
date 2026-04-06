@@ -15,6 +15,7 @@ export interface WCAttribute {
   name: string;
   options: string[];
   variation: boolean;
+  visible: boolean;
 }
 
 export interface WCProduct {
@@ -51,8 +52,20 @@ export interface WCProductCategory {
   parent: number;
 }
 
+export interface WCVariation {
+  id: number;
+  price: string;
+  regular_price: string;
+  sale_price: string;
+  on_sale: boolean;
+  stock_status: 'instock' | 'outofstock' | 'onbackorder';
+  attributes: { id: number; name: string; option: string }[];
+  image: WCImage;
+}
+
 export interface WCCartItem {
   product: WCProduct;
   qty: number;
+  variationId?: number;
   selectedOptions?: Record<string, string>;
 }

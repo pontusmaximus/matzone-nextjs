@@ -11,7 +11,7 @@ export default async function Footer({ locale }: FooterProps) {
   const t = await getTranslations('footer');
 
   return (
-    <footer className="bg-[#0a0a0a] text-gray-500 pt-16 pb-9 px-20">
+    <footer className="bg-[#0a0a0a] text-gray-500 pt-16 pb-9 px-6 md:px-20">
       <div className="grid grid-cols-1 md:grid-cols-[1.6fr_1fr_1fr_1fr] gap-12 mb-12">
         {/* Brand */}
         <div>

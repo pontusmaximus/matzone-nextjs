@@ -7,14 +7,18 @@ import type { WCProduct, WCCartItem } from '@/types/woocommerce';
 interface CartStore {
   items: WCCartItem[];
   isOpen: boolean;
-  addItem: (product: WCProduct, qty?: number) => void;
-  removeItem: (productId: number) => void;
-  updateQty: (productId: number, qty: number) => void;
+  addItem: (product: WCProduct, qty?: number, variationId?: number, selectedOptions?: Record<string, string>) => void;
+  removeItem: (productId: number, variationId?: number) => void;
+  updateQty: (productId: number, qty: number, variationId?: number) => void;
   clearCart: () => void;
   openCart: () => void;
   closeCart: () => void;
   totalItems: () => number;
   totalPrice: () => number;
+}
+
+function cartItemKey(item: WCCartItem): string {
+  return `${item.product.id}-${item.variationId ?? 0}`;
 }
 
 export const useCart = create<CartStore>()(
@@ -23,32 +27,47 @@ export const useCart = create<CartStore>()(
       items: [],
       isOpen: false,
 
-      addItem: (product, qty = 1) => {
+      addItem: (product, qty = 1, variationId, selectedOptions) => {
         set(state => {
-          const existing = state.items.find(i => i.product.id === product.id);
+          const existing = state.items.find(
+            i => i.product.id === product.id && (i.variationId ?? 0) === (variationId ?? 0)
+          );
           if (existing) {
             return {
               items: state.items.map(i =>
-                i.product.id === product.id ? { ...i, qty: i.qty + qty } : i
+                i.product.id === product.id && (i.variationId ?? 0) === (variationId ?? 0)
+                  ? { ...i, qty: i.qty + qty }
+                  : i
               ),
               isOpen: true,
             };
           }
-          return { items: [...state.items, { product, qty }], isOpen: true };
+          return {
+            items: [...state.items, { product, qty, variationId, selectedOptions }],
+            isOpen: true,
+          };
         });
       },
 
-      removeItem: (productId) => {
-        set(state => ({ items: state.items.filter(i => i.product.id !== productId) }));
+      removeItem: (productId, variationId) => {
+        set(state => ({
+          items: state.items.filter(
+            i => !(i.product.id === productId && (i.variationId ?? 0) === (variationId ?? 0))
+          ),
+        }));
       },
 
-      updateQty: (productId, qty) => {
+      updateQty: (productId, qty, variationId) => {
         if (qty <= 0) {
-          get().removeItem(productId);
+          get().removeItem(productId, variationId);
           return;
         }
         set(state => ({
-          items: state.items.map(i => i.product.id === productId ? { ...i, qty } : i),
+          items: state.items.map(i =>
+            i.product.id === productId && (i.variationId ?? 0) === (variationId ?? 0)
+              ? { ...i, qty }
+              : i
+          ),
         }));
       },
 

@@ -115,7 +115,7 @@ export default function Navbar({ locale }: NavbarProps) {
 
       {/* Nav */}
       <nav
-        className={`sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 h-16 flex items-center px-10 transition-shadow ${
+        className={`sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 h-16 flex items-center px-4 md:px-10 transition-shadow ${
           scrolled ? 'shadow-sm' : ''
         }`}
       >

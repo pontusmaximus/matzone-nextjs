@@ -56,7 +56,7 @@ export default async function HomePage({
     <>
       {/* ── HERO ── */}
       <section className="grid grid-cols-1 md:grid-cols-2 min-h-[calc(100vh-101px)]">
-        <div className="flex flex-col justify-center px-20 py-20">
+        <div className="flex flex-col justify-center px-6 md:px-20 py-20">
           <p className="text-[11px] font-medium tracking-[0.18em] uppercase text-gray-400 mb-5">
             {t('eyebrow')}
           </p>
@@ -104,7 +104,7 @@ export default async function HomePage({
       </section>
 
       {/* ── PRODUCTS ── */}
-      <section className="px-20 py-20" id="products">
+      <section className="px-6 md:px-20 py-20" id="products">
         <div className="flex items-end justify-between mb-11">
           <div>
             <h2 className="font-serif text-3xl font-normal tracking-[-0.02em]">{tp('title')}</h2>
@@ -142,7 +142,7 @@ export default async function HomePage({
       </section>
 
       {/* ── BAND ── */}
-      <div className="bg-black text-white px-20 py-[72px] grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+      <div className="bg-black text-white px-6 md:px-20 py-[72px] grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
         <div>
           <h2 className="font-serif text-[42px] font-normal leading-[1.1] tracking-[-0.02em]">
             {tb('title').split(tb('titleEm'))[0]}
@@ -172,7 +172,7 @@ export default async function HomePage({
 
       {/* ── CATEGORIES ── */}
       <section className="py-20" id="categories">
-        <div className="px-20 mb-11">
+        <div className="px-6 md:px-20 mb-11">
           <h2 className="font-serif text-3xl font-normal tracking-[-0.02em]">{tc('title')}</h2>
           <p className="text-[13px] text-gray-400 mt-1.5">{tc('subtitle')}</p>
         </div>
@@ -202,7 +202,7 @@ export default async function HomePage({
       </section>
 
       {/* ── COUNTRIES ── */}
-      <div className="bg-gray-100 px-20 py-14">
+      <div className="bg-gray-100 px-6 md:px-20 py-14">
         <h3 className="font-serif text-[26px] font-normal mb-1.5">{tco('title')}</h3>
         <p className="text-[13px] text-gray-400 mb-8">{tco('subtitle')}</p>
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
@@ -219,7 +219,7 @@ export default async function HomePage({
       </div>
 
       {/* ── NEWSLETTER ── */}
-      <div className="px-20 py-20 text-center border-t border-gray-100">
+      <div className="px-6 md:px-20 py-20 text-center border-t border-gray-100">
         <h3 className="font-serif text-[32px] font-normal tracking-[-0.02em] mb-2">{tn('title')}</h3>
         <p className="text-[14px] text-gray-400 mb-8">{tn('desc')}</p>
         <form className="flex justify-center max-w-[400px] mx-auto" action="#">

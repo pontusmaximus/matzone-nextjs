@@ -38,13 +38,13 @@ export default async function ShopPage({ params: { locale }, searchParams }: Sho
   return (
     <div className="min-h-screen">
       {/* Page Header */}
-      <div className="px-20 py-16 border-b border-gray-100">
+      <div className="px-6 md:px-20 py-16 border-b border-gray-100">
         <p className="text-[11px] tracking-[0.18em] uppercase text-gray-400 mb-3" translate="no">matzone</p>
         <h1 className="font-serif text-[48px] font-normal tracking-[-0.02em] mb-2">{t('title')}</h1>
         <p className="text-[14px] text-gray-500">{products.length} Produkte</p>
       </div>
 
-      <div className="px-20 py-8 flex flex-col md:flex-row gap-6 items-start md:items-center justify-between border-b border-gray-100">
+      <div className="px-6 md:px-20 py-8 flex flex-col md:flex-row gap-6 items-start md:items-center justify-between border-b border-gray-100">
         {/* Filters */}
         <div className="flex gap-2 flex-wrap">
           {filterOptions.map(f => (
@@ -75,7 +75,7 @@ export default async function ShopPage({ params: { locale }, searchParams }: Sho
       </div>
 
       {/* Product Grid */}
-      <div className="px-20 py-10">
+      <div className="px-6 md:px-20 py-10">
         {products.length === 0 ? (
           <div className="text-center py-20 text-gray-400">
             <p className="text-lg">Keine Produkte gefunden.</p>

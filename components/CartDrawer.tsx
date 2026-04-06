@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { X, Minus, Plus, ShoppingBag } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useCart } from '@/lib/cart';
@@ -102,13 +103,20 @@ export default function CartDrawer({ locale }: CartDrawerProps) {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-[13px] font-medium leading-snug truncate">{item.product.name}</p>
-                    <p className="text-[11px] text-gray-400 mt-0.5">{item.product.categories?.[0]?.name}</p>
+                    {item.selectedOptions && (
+                      <p className="text-[11px] text-gray-400 mt-0.5">
+                        {Object.values(item.selectedOptions).join(' / ')}
+                      </p>
+                    )}
+                    {!item.selectedOptions && (
+                      <p className="text-[11px] text-gray-400 mt-0.5">{item.product.categories?.[0]?.name}</p>
+                    )}
                     <div className="flex items-center gap-2 mt-2">
-                      <button onClick={() => updateQty(item.product.id, item.qty - 1)} className="w-6 h-6 border border-gray-200 flex items-center justify-center hover:border-black transition-colors">
+                      <button onClick={() => updateQty(item.product.id, item.qty - 1, item.variationId)} className="w-6 h-6 border border-gray-200 flex items-center justify-center hover:border-black transition-colors">
                         <Minus size={11} />
                       </button>
                       <span className="text-[13px] w-6 text-center">{item.qty}</span>
-                      <button onClick={() => updateQty(item.product.id, item.qty + 1)} className="w-6 h-6 border border-gray-200 flex items-center justify-center hover:border-black transition-colors">
+                      <button onClick={() => updateQty(item.product.id, item.qty + 1, item.variationId)} className="w-6 h-6 border border-gray-200 flex items-center justify-center hover:border-black transition-colors">
                         <Plus size={11} />
                       </button>
                     </div>
@@ -139,9 +147,13 @@ export default function CartDrawer({ locale }: CartDrawerProps) {
               <span>Gesamt</span>
               <span>{formatLocalPrice(grandTotalEur, shopCountry)}</span>
             </div>
-            <button className="w-full bg-black text-white py-4 text-[12px] font-medium tracking-[0.06em] uppercase hover:bg-[#1a1a1a] transition-colors mb-2.5">
+            <Link
+              href={`/${locale}/kasse`}
+              onClick={closeCart}
+              className="block w-full bg-black text-white py-4 text-[12px] font-medium tracking-[0.06em] uppercase hover:bg-[#1a1a1a] transition-colors mb-2.5 text-center"
+            >
               {t('checkout')} →
-            </button>
+            </Link>
             <p className="text-center text-[11px] text-gray-400">{t('shippingNote')}</p>
           </div>
         )}

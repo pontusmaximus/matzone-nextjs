@@ -73,14 +73,14 @@ export default async function BlogPage({ params: { locale } }: { params: { local
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <div className="px-20 py-16 border-b border-gray-100">
+      <div className="px-6 md:px-20 py-16 border-b border-gray-100">
         <p className="text-[11px] tracking-[0.18em] uppercase text-gray-400 mb-3" translate="no">matzone</p>
         <h1 className="font-serif text-[48px] font-normal tracking-[-0.02em] mb-2">{t('title')}</h1>
         <p className="text-[14px] text-gray-500">{t('subtitle')}</p>
       </div>
 
       {/* Posts Grid */}
-      <div className="px-20 py-16">
+      <div className="px-6 md:px-20 py-16">
         {/* Featured Post */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 pb-16 border-b border-gray-100">
           <div className="aspect-[4/3] bg-gray-100 relative overflow-hidden">
