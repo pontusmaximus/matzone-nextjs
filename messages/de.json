@@ -1,0 +1,125 @@
+{
+  "nav": {
+    "shop": "Sortiment",
+    "categories": "Kategorien",
+    "custom": "Maßanfertigung",
+    "blog": "Blog",
+    "contact": "Kontakt",
+    "cart": "Warenkorb"
+  },
+  "topbar": {
+    "shipping": "Versand in alle EU-Länder",
+    "freeShipping": "Kostenloser Versand ab",
+    "returns": "30 Tage Rückgabe"
+  },
+  "hero": {
+    "eyebrow": "Premium Fussmatten — handgefertigt",
+    "title": "Der erste Eindruck beginnt an der Tür.",
+    "titleEm": "beginnt",
+    "desc": "Hochwertige Fussmatten für Innen- und Außenbereich. Maßgenau gefertigt, langlebig und in ganz Europa erhältlich.",
+    "cta": "Jetzt entdecken",
+    "ctaSecondary": "Alle Kategorien",
+    "bestseller": "Bestseller"
+  },
+  "products": {
+    "title": "Unser Sortiment",
+    "subtitle": "Direkt aus dem Shop — echte Produkte, echte Preise",
+    "viewAll": "Alle Produkte",
+    "filterAll": "Alle",
+    "filterOutdoor": "Außenbereich",
+    "filterIndoor": "Innenbereich",
+    "filterStandard": "Standardgrößen",
+    "filterSteel": "Edelstahlroste",
+    "filterAccessory": "Zubehör",
+    "addToCart": "In den Warenkorb",
+    "outOfStock": "Nicht verfügbar",
+    "new": "Neu",
+    "sale": "Sale"
+  },
+  "cart": {
+    "title": "Warenkorb",
+    "empty": "Dein Warenkorb ist leer.",
+    "subtotal": "Zwischensumme",
+    "checkout": "Zur Kasse",
+    "shippingNote": "Versand & Steuern werden im Checkout berechnet",
+    "remove": "Entfernen"
+  },
+  "categories": {
+    "title": "Kategorien",
+    "subtitle": "Für jeden Einsatzbereich die richtige Matte",
+    "outdoor": "Außenbereich",
+    "indoor": "Innenbereich",
+    "steel": "Edelstahlroste",
+    "logo": "Logo & Werbung"
+  },
+  "band": {
+    "title": "Qualität, die standhält — jede Saison.",
+    "titleEm": "standhält",
+    "desc": "matzone Produkte werden aus handverlesenen Materialien gefertigt. Jedes Stück durchläuft strenge Qualitätskontrollen, bevor es seinen Weg zu Ihrer Tür findet.",
+    "cta": "Über unsere Qualität"
+  },
+  "countries": {
+    "title": "Erhältlich in ganz Europa",
+    "subtitle": "Länderspezifische Shops — lokale Sprache, Währung & SEO-Optimierung"
+  },
+  "newsletter": {
+    "title": "Neuheiten & Angebote",
+    "desc": "Newsletter abonnieren & 10 % auf die erste Bestellung sichern.",
+    "placeholder": "deine@email.com",
+    "cta": "Anmelden",
+    "success": "Danke! Du erhältst in Kürze eine Bestätigungsmail."
+  },
+  "footer": {
+    "about": "Premium Fussmatten für Europa. Maßgenau, langlebig, in höchster Qualität — direkt aus Österreich.",
+    "shop": "Shop",
+    "shopLinks": {
+      "all": "Alle Produkte",
+      "outdoor": "Außenbereich",
+      "indoor": "Innenbereich",
+      "steel": "Edelstahlroste",
+      "custom": "Maßanfertigung"
+    },
+    "service": "Service",
+    "serviceLinks": {
+      "shipping": "Versand & Lieferung",
+      "returns": "Rückgabe",
+      "faq": "FAQ",
+      "contact": "Kontakt",
+      "dealer": "Händler werden"
+    },
+    "company": "Unternehmen",
+    "companyLinks": {
+      "about": "Über matzone",
+      "sustainability": "Nachhaltigkeit",
+      "blog": "Blog",
+      "press": "Presse",
+      "jobs": "Jobs"
+    },
+    "legal": "© 2026 matzone. Alle Rechte vorbehalten.",
+    "privacy": "Datenschutz",
+    "imprint": "Impressum",
+    "terms": "AGB",
+    "cookies": "Cookies"
+  },
+  "product": {
+    "addToCart": "In den Warenkorb",
+    "description": "Beschreibung",
+    "attributes": "Eigenschaften",
+    "relatedTitle": "Das könnte dir auch gefallen",
+    "backToShop": "← Zurück zum Shop",
+    "inStock": "Auf Lager",
+    "outOfStock": "Nicht verfügbar"
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Tipps, Trends & Pflege für Ihre Fussmatten",
+    "readMore": "Weiterlesen"
+  },
+  "seo": {
+    "homeTitle": "matzone — Premium Fussmatten für Europa",
+    "homeDesc": "Hochwertige Fussmatten maßgenau gefertigt. Außenbereich, Innenbereich, Edelstahlroste & Logo-Matten. Versand in ganz Europa.",
+    "shopTitle": "Shop — matzone Premium Fussmatten",
+    "shopDesc": "Entdecke das komplette Sortiment von matzone: Aluprofil, Sauberlauf, Sisal, Edelstahlroste und mehr — maßgenau oder in Standardgrößen.",
+    "blogTitle": "Blog — Tipps & Trends | matzone"
+  }
+}
