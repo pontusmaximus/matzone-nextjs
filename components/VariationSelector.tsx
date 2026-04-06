@@ -61,14 +61,24 @@ export default function VariationSelector({ product, variations, locale, onVaria
   }, [matchedVariation]);
 
   const isVariable = product.type === 'variable';
-  const currentPrice = matchedVariation?.price ?? product.price;
-  const currentRegularPrice = matchedVariation?.regular_price ?? product.regular_price;
-  const currentSalePrice = matchedVariation?.sale_price ?? product.sale_price;
+  const pricePerM2 = parseFloat(matchedVariation?.price ?? product.price);
+  const regularPricePerM2 = parseFloat(matchedVariation?.regular_price ?? product.regular_price);
+  const salePricePerM2 = parseFloat((matchedVariation?.sale_price ?? product.sale_price) || '0');
   const isOnSale = matchedVariation ? matchedVariation.on_sale : product.on_sale;
   const isOutOfStock = isVariable
     ? (matchedVariation ? matchedVariation.stock_status === 'outofstock' : true)
     : product.stock_status === 'outofstock';
   const canAddToCart = isVariable ? !!matchedVariation && !isOutOfStock : !isOutOfStock;
+
+  // Calculate area-based price from custom dimensions
+  const widthM = parseFloat(width) / 1000 || 0;
+  const lengthM = parseFloat(length) / 1000 || 0;
+  const areaM2 = widthM * lengthM;
+  const hasCustomDimensions = widthM > 0 && lengthM > 0;
+
+  const calculatedPrice = hasCustomDimensions ? pricePerM2 * areaM2 : pricePerM2;
+  const calculatedRegularPrice = hasCustomDimensions ? regularPricePerM2 * areaM2 : regularPricePerM2;
+  const calculatedSalePrice = hasCustomDimensions && salePricePerM2 > 0 ? salePricePerM2 * areaM2 : 0;
 
   const handleSelect = (attrName: string, value: string) => {
     setSelected(prev => ({ ...prev, [attrName]: value }));
@@ -81,7 +91,7 @@ export default function VariationSelector({ product, variations, locale, onVaria
     if (length) options['Länge (mm)'] = length;
 
     addItem(
-      { ...product, price: currentPrice },
+      { ...product, price: String(calculatedPrice) },
       1,
       matchedVariation?.id,
       options
@@ -92,15 +102,33 @@ export default function VariationSelector({ product, variations, locale, onVaria
     <div>
       {/* Price */}
       <div className="mb-6">
-        {isOnSale && currentSalePrice ? (
-          <div className="flex items-center gap-3">
-            <span className="text-[28px] font-medium">{formatLocalPrice(parseFloat(currentSalePrice), shopCountry)}</span>
-            <span className="text-[18px] text-gray-400 line-through">{formatLocalPrice(parseFloat(currentRegularPrice), shopCountry)}</span>
+        {hasCustomDimensions ? (
+          <div>
+            {isOnSale && calculatedSalePrice > 0 ? (
+              <div className="flex items-center gap-3">
+                <span className="text-[28px] font-medium">{formatLocalPrice(calculatedSalePrice, shopCountry)}</span>
+                <span className="text-[18px] text-gray-400 line-through">{formatLocalPrice(calculatedRegularPrice, shopCountry)}</span>
+              </div>
+            ) : (
+              <span className="text-[28px] font-medium">{formatLocalPrice(calculatedPrice, shopCountry)}</span>
+            )}
+            <p className="text-[11px] text-gray-400 mt-1">
+              {areaM2.toFixed(2)} m² × {formatLocalPrice(pricePerM2, shopCountry)}/m²
+            </p>
           </div>
         ) : (
-          <span className="text-[28px] font-medium">{formatLocalPrice(parseFloat(currentPrice), shopCountry)}</span>
+          <div>
+            {isOnSale && salePricePerM2 > 0 ? (
+              <div className="flex items-center gap-3">
+                <span className="text-[28px] font-medium">{formatLocalPrice(salePricePerM2, shopCountry)}</span>
+                <span className="text-[18px] text-gray-400 line-through">{formatLocalPrice(regularPricePerM2, shopCountry)}</span>
+              </div>
+            ) : (
+              <span className="text-[28px] font-medium">{formatLocalPrice(pricePerM2, shopCountry)}</span>
+            )}
+            <p className="text-[11px] text-gray-400 mt-1">{t('priceNote')}</p>
+          </div>
         )}
-        <p className="text-[11px] text-gray-400 mt-1">{t('priceNote')}</p>
       </div>
 
       {/* Variation selectors */}
